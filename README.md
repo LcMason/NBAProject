@@ -1,4 +1,4 @@
-# Building Your Roster
+![](images/filenameNBALogo.jpeg) # Building Your Roster
 > A simple but aesthic app that allows you to shop for different makeup products.
 ---
 [OVERVIEW](https://github.com/LcMason/NBAProject#overview) • 
