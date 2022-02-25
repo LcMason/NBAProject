@@ -1,8 +1,6 @@
 /** GLOBAL VARIABLES **/
   const display = document.querySelector('#display')
-  const searchTerm = document.getElementById('search-input')
   const submitPlayer= document.getElementById('new-player-search')
-  // const form = document.getElementById('form')
   const playerContainer= document.getElementById('playercontainer')
   let isBenched;
   let isStart;
@@ -30,8 +28,8 @@ const createdPlayer = (player) => {
     const team = document.createElement('h2')
     team.innerText = player.team.full_name
     playerDiv.append(name, playerPosition, team);
-    const playerContainer = document.getElementById('playercontainer') //Why is playerContainer grayed out??
-    return playerDiv //why return player div?
+  
+    return playerDiv //92 & 104
    
 }
 
@@ -52,7 +50,7 @@ function fetchPlayer(search) {
 
   function renderPlayer(player) {
     players.push(player)                      //adding elemnts to the end of the array of player. Player is not defined.
-    const div = document.createElement('div')
+    const div = document.createElement('div') //is this element accessible in all code or only in this function scope?
     div.id = player.id            //the player.id will change as every player is assigned a diff id
     div.className = 'playerCard'
     div.innerHTML = `<p>Player Name: ${player.first_name} ${player.last_name}</p>`
@@ -68,11 +66,12 @@ function fetchPlayer(search) {
       div.append(button2)
       button1.addEventListener('click', () => {
         button1.dataset.isStart === 'true' ? removeFromStart(button1) : addToStart(button1)
-        
+        div.remove()
       })
     
       button2.addEventListener('click', () => {
         button2.dataset.isBenched === 'true' ? removeFromBench(button2) : addToBench(button2)
+        div.remove()
       
         
     
@@ -90,9 +89,8 @@ function addToStart (button1) {
     button1.innerText = 'Remove'
     let player = createdPlayer(foundPlayerObj)
     const starterContainer = document.getElementById('starterContainer')
-    starterContainer.append(player, button1);
-    // const card = document.querySelector('.playerCard')
-    // card.innerHTML= " "
+    player.append(button1)
+    starterContainer.append(player);
 }
 
 
@@ -100,37 +98,22 @@ function addToBench (button2) {
   alert ('bench')
   let foundPlayerObj = players.find((p)=> p.id === parseInt(button2.parentElement.id)) //once you've assigned a value to a variable using const , you can't reassign it to a new value
   button2.dataset.isBenched = 'true'
+  button2.innerText = 'Remove'
   let player = createdPlayer(foundPlayerObj)
   const benchContainer = document.getElementById('benchContainer')
-  benchContainer.append(player, button2);
-  // const card = document.querySelector('.playerCard')
-  // card.innerHTML= " "
+  player.append(button2)
+  benchContainer.append(player);
  }
 
 
- function removeFromStart (e) {     //want to remove the player from the starterContainer and add them back into the playercontainer 
+ function removeFromStart (button1) {    
   alert  ("remove from starting lineup")
-  debugger
-  // let foundPlayerObj = players.find((p)=> p.id === parseInt(e.target.parentElement.id))
-  let foundPlayerObj = players.find()
-  let player = createdPlayer(foundPlayerObj)
-  const playerContainer = document.getElementById('playercontainer')
-  const div = document.createElement('div') 
-  // div.id = player.id
-  e.target.innerHTML = "START"
-  playerContainer.append(div, player,e.target)
-  debugger
+  button1.parentElement.remove()
  }
 
- function removeFromBench (e) {     //use .hidden to hide players on a second click 
-  alert ("add to bench")
-  let foundPlayerObj = players.find((p)=> p.id === parseInt(e.target.parentElement.id))
-  let player = createdPlayer(foundPlayerObj)
-  e.target.dataset.isBenched = e.target.dataset.isBenched === 'true' ? 'false' : 'true'
-
-  e.target.innerHTML = "BENCH"
-  
-
+ function removeFromBench (button2) {    
+  alert ("Remove from reserve list")
+  button2.parentElement.remove()
  }
 
 
