@@ -34,11 +34,13 @@ main > div{
 
 #starterContainer {
     text-align: left;
+    overflow-y: scroll;
 
 }
 
 #benchContainer {
     text-align: right;
+    overflow-y: scroll;
 }
 
 footer{
